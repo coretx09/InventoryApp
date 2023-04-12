@@ -17,23 +17,29 @@ class InventoryViewModel(private val itemDao: ItemDao): ViewModel() {
         }
     }
     // Get input user
-    private fun getNewItemEntry(itemName:String, itemPrice:String, itemCount:String): Item {
+    private fun getNewItemEntry(itemName: String, itemPrice: String, itemCount: String): Item {
         return Item(
             itemName = itemName,
             itemPrice = itemPrice.toDouble(),
             quantityInStock = itemCount.toInt()
         )
     }
-    fun addNewItem(itemName:String, itemPrice:String, itemCount:String) {
-        val newItem = getNewItemEntry(itemName,itemPrice,itemCount)
+    fun addNewItem(itemName: String, itemPrice: String, itemCount: String) {
+        val newItem = getNewItemEntry(itemName, itemPrice, itemCount)
         insertIem(newItem)
+    }
+    fun isEntryValid(itemName: String, itemPrice: String, itemCount: String):Boolean {
+        if (itemName.isBlank() || itemPrice.isBlank() || itemCount.isBlank()) {
+            return false
+        }
+        return true
     }
 
 
 
 
     class InventoryViewModelFactory(private val itemDao: ItemDao) : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(InventoryViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
                 return InventoryViewModel(itemDao) as T
@@ -41,6 +47,7 @@ class InventoryViewModel(private val itemDao: ItemDao): ViewModel() {
             throw IllegalArgumentException("Unknown ViewModel class")
         }
     }
+
 
 
 }
