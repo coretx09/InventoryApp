@@ -58,7 +58,10 @@ class ItemListFragment : Fragment() {
             this.findNavController().navigate(action)
         }
         // Adapter
-        val adapter = ItemListAdapter{}
+        val adapter = ItemListAdapter{
+            val action = ItemListFragmentDirections.actionItemListFragmentToItemDetailFragment(it.id)
+            this.findNavController().navigate(action)
+        }
         binding.recyclerView.adapter = adapter
         viewModel.allItems.observe(viewLifecycleOwner) {items ->
             items.let { adapter.submitList(it) }

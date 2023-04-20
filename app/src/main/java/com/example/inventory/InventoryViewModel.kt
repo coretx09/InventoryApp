@@ -10,6 +10,9 @@ class InventoryViewModel(private val itemDao: ItemDao): ViewModel() {
     // Get all items
     val allItems: LiveData<List<Item>> = itemDao.getItems().asLiveData()
 
+    // Retrieve Item by id
+    fun retrieveItem(id: Int): LiveData<Item> = itemDao.getItem(id).asLiveData()
+
 
     // ADD ITEM FRAGMENT BUSINESS LOGIC
     fun addNewItem(itemName: String, itemPrice: String, itemCount: String) {
